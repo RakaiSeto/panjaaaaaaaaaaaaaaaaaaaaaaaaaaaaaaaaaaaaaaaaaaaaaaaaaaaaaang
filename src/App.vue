@@ -1,20 +1,55 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, watch } from 'vue';
+import { stringToBinary, isValidUrl } from './tools';
+import Input from './components/Input.vue'
+import Output from './components/Output.vue'
+import Footer from './components/footer.vue'
+
+const text = ref('')
+const textToShow = ref('')
+const isCopyDisabled = ref(true)
+
+watch(text, () => {
+  expandLink()
+})
+
+function expandLink() {
+  if (text.value === '') {
+    textToShow.value = ''
+    isCopyDisabled.value = true
+    return
+  }
+  if (isValidUrl(text.value)) {
+    textToShow.value = 'panjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaang.rakaiseto.com/redirect/panj' + stringToBinary(text.value) + 'ng'
+    isCopyDisabled.value = false
+  } else {
+    textToShow.value = 'Invalid URL'
+    isCopyDisabled.value = true
+  }
+}
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <header class="mb-4">
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <h1 class="text-4xl font-semibold">panjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaang</h1>
+      <br>
+      <br>
+      <h4 class="text-xl font-semibold">Link Expander</h4>
+      <br>
+      <br>
+      <br>
     </div>
   </header>
 
-  <main>
-    <TheWelcome />
+  <main class="flex flex-col gap-4 items-center justify-center w-full mx-4 my-2 min-h-[calc(30vh-2rem)]">
+    <Input v-model="text" />
+    <Output :textToShow="textToShow" :disabled="isCopyDisabled" />
   </main>
+
+  <Footer />
 </template>
 
 <style scoped>
@@ -31,7 +66,7 @@ header {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    justify-content: center;
   }
 
   .logo {
@@ -39,9 +74,9 @@ header {
   }
 
   header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    text-align:center;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
   }
 }
 </style>

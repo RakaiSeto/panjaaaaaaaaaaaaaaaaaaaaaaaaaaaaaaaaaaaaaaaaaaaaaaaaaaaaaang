@@ -16,6 +16,7 @@
   --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
 
   --vt-c-text-light-1: var(--vt-c-indigo);
+  --c-text-primary: #1671f9;
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
@@ -31,7 +32,7 @@
   --color-border-hover: var(--vt-c-divider-light-1);
 
   --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
+  --color-text: var(--c-text-primary);
 
   --section-gap: 160px;
 }
@@ -60,7 +61,7 @@
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
+  color: var(--c-text-primary);
   background: var(--color-background);
   transition:
     color 0.5s,

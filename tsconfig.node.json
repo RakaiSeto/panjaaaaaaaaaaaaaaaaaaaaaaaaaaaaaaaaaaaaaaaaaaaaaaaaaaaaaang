@@ -1,19 +1,24 @@
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
   "include": [
-    "vite.config.*",
     "vitest.config.*",
     "cypress.config.*",
     "nightwatch.conf.*",
     "playwright.config.*",
-    "eslint.config.*"
+    "eslint.config.*",
+    "server.ts"
   ],
   "compilerOptions": {
-    "noEmit": true,
+    "noEmit": false,
+    "outDir": "dist",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "types": ["node"]
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "types": ["node"],
+    "esModuleInterop": true,
+    "target": "es2016",
+    "lib": ["es2016"],
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   }
 }
