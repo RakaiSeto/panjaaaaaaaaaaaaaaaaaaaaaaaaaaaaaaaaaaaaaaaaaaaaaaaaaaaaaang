@@ -6,6 +6,8 @@
     Made by <a class="p-0" href="https://rakaiseto.com" target="_blank">Rakaiseto</a>
     <br>
     Check it on <a class="p-0" href="https://github.com/RakaiSeto/panjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaang" target="_blank">github</a>
+    <br>
+    cd berhasil
   </footer>
 </template>
 
