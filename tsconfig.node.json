@@ -5,7 +5,7 @@
     "nightwatch.conf.*",
     "playwright.config.*",
     "eslint.config.*",
-    "server.ts"
+    "panjang.ts"
   ],
   "compilerOptions": {
     "noEmit": false,
