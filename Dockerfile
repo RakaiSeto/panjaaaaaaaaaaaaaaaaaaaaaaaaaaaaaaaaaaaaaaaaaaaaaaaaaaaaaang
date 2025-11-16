@@ -1,33 +1,40 @@
-# File: Dockerfile
+# ------------------------------------------------------
+# STAGE 1 — Builder
+# ------------------------------------------------------
+    FROM node:20-slim AS builder
 
-# Stage 1: The Build Environment
-FROM node:18-alpine AS builder
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-
-# This command will compile the client-side assets
-RUN npm run build
-RUN npm run build-server
-
-# Stage 2: The Final, Lightweight Production Image
-FROM node:18-alpine
-
-# Create a non-root user for security
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
-
-# Set the working directory
-WORKDIR /usr/src/app
-
-# Copy the compiled assets and dependencies
-COPY --chown=appuser:appgroup --from=builder /usr/src/app/node_modules ./node_modules
-COPY --chown=appuser:appgroup --from=builder /usr/src/app/ecosystem.config.js .
-COPY --chown=appuser:appgroup --from=builder /usr/src/app/dist ./dist
-
-# The production command to start your application
-CMD ["/usr/src/app/node_modules/.bin/pm2-runtime", "start", "ecosystem.config.js"]
+    WORKDIR /app
+    
+    # Install deps cleanly
+    COPY package*.json ./
+    RUN npm ci
+    
+    # Copy rest of project
+    COPY . .
+    
+    # Build client + server
+    RUN npm run build
+    RUN npm run build-server
+    
+    
+    # ------------------------------------------------------
+    # STAGE 2 — Production Runtime
+    # ------------------------------------------------------
+    FROM node:20-slim
+    
+    # Create non-root user
+    RUN useradd -m appuser
+    USER appuser
+    
+    WORKDIR /app
+    
+    # Only copy required artifacts
+    COPY --from=builder /app/node_modules ./node_modules
+    COPY --from=builder /app/ecosystem.config.js .
+    COPY --from=builder /app/dist ./dist
+    
+    # Expose port (optional)
+    EXPOSE 3000
+    
+    # Start with PM2 runtime
+    CMD ["node_modules/.bin/pm2-runtime", "start", "ecosystem.config.js"]    

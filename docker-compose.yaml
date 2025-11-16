@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  panjang:
+    networks:
+      - panjang-com-network
+    image: ghcr.io/rakaiseto/panjang:latest
+    container_name: panjang
+    restart: always
+    ports:
+      - "127.0.0.1:21001:8094"
+networks:
+  panjang-com-network:
