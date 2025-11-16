@@ -8,6 +8,6 @@ services:
     container_name: panjang
     restart: always
     ports:
-      - "127.0.0.1:21001:8094"
+      - "127.0.0.1:21003:3000"
 networks:
   panjang-com-network:
